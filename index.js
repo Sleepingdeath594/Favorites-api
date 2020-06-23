@@ -35,9 +35,17 @@ app.get("/", function (req, res) {
 app.get("/api/favor", function (req, res) {
   return res.json(favoriteShows);
 });
+app.get("/api/characters/:character", function (req, res) {
+  var chosen = req.params.character;
 
-for (var i = 0; i < characters.length; i++) {
-  if (chosen === characters[i].routeName) {
-    return res.json(characters[i]);
+  console.log(chosen);
+
+  for (var i = 0; i < favoriteShows.length; i++) {
+    if (chosen === favoriteShows[i].routeName) {
+      return res.json(favoriteShows[i]);
+    }
   }
-}
+});
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
+});
