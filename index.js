@@ -41,13 +41,21 @@ app.get("/api/favorShows/:character", function (req, res) {
   console.log(chosen);
 
   for (var i = 0; i < favoriteShows.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
+    if (chosen === favoriteShows[i].id) {
+      return res.json(favoriteShows[i]);
     }
   }
-
   return res.send("No character found");
 });
 app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
+});
+app.post("/api/favor", function (req, res) {
+  var newCharacter = req.body;
+
+  console.log(newCharacter);
+
+  characters.push(newCharacter);
+
+  res.json(newCharacter);
 });
