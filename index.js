@@ -4,6 +4,9 @@ var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 var PORT = process.env.PORT || 3000;
+
+app.set("view engine", "ejs");
+
 var favoriteShows = [
   {
     Title: "Angels of Death",
@@ -32,25 +35,22 @@ var favoriteShows = [
   },
 ];
 app.get("/", function (req, res) {
-  res.send("Welcome to MyFavorite List!");
+  return res.render("home.ejs");
 });
 app.get("/api/favor", function (req, res) {
-  return res.json(favoriteShows);
+  return res.render("index.ejs");
 });
-app.get("/api/favorShows/:character", function (req, res) {
-  var chosen = req.params.character;
+app.get("/api/favorShows/:id", function (req, res) {
+  var chosen = parseInt(req.params.id);
 
   console.log(chosen);
 
   for (var i = 0; i < favoriteShows.length; i++) {
-    if (chosen === favoriteShows[i].Title) {
-      return res.json(favoriteShows[i]);
+    if (chosen === favoriteShows[i].id) {
+      return res.render("show.ejs");
     }
   }
-  return res.send("No character found");
-});
-app.listen(PORT, function () {
-  console.log("App listening on PORT " + PORT);
+  res.render("show.ejs");
 });
 app.post("/api/favor", function (req, res) {
   var newCharacter = req.body;
@@ -60,4 +60,8 @@ app.post("/api/favor", function (req, res) {
   favoriteShows.push(newCharacter);
 
   res.json(newCharacter);
+});
+
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
 });
