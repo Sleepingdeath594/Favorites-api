@@ -35,10 +35,10 @@ var favoriteShows = [
   },
 ];
 app.get("/", function (req, res) {
-  return res.render("home.ejs");
+  return res.render("home.ejs", { user: "Caden" });
 });
 app.get("/api/favor", function (req, res) {
-  return res.render("index.ejs");
+  return res.render("index.ejs", { list: favoriteShows });
 });
 app.get("/api/favorShows/:id", function (req, res) {
   var chosen = parseInt(req.params.id);
