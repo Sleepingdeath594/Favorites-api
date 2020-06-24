@@ -1,7 +1,9 @@
 var express = require("express");
-
 var app = express();
-var PORT = 3000;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+var PORT = process.env.PORT || 3000;
 var favoriteShows = [
   {
     Title: "Angels of Death",
@@ -41,7 +43,7 @@ app.get("/api/favorShows/:character", function (req, res) {
   console.log(chosen);
 
   for (var i = 0; i < favoriteShows.length; i++) {
-    if (chosen === favoriteShows[i].id) {
+    if (chosen === favoriteShows[i].Title) {
       return res.json(favoriteShows[i]);
     }
   }
@@ -55,7 +57,7 @@ app.post("/api/favor", function (req, res) {
 
   console.log(newCharacter);
 
-  characters.push(newCharacter);
+  favoriteShows.push(newCharacter);
 
   res.json(newCharacter);
 });
